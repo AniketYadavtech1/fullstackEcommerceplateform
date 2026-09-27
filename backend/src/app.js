@@ -1,0 +1,34 @@
+const express = require("express");
+const cors = require("cors");
+
+const productRoutes = require("./routes/productRoutes");
+
+const app = express();
+
+
+// Middleware
+app.use(cors());
+
+app.use(express.json());
+
+app.use(express.urlencoded({
+    extended: true
+}));
+
+
+// Health check
+app.get("/", (req, res) => {
+
+    res.json({
+        success: true,
+        message: "E-Commerce API is running"
+    });
+
+});
+
+
+// Product API
+app.use("/api/products", productRoutes);
+
+
+module.exports = app;
