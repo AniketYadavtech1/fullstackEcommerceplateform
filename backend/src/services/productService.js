@@ -1,8 +1,6 @@
 const pool = require("../config/database");
-
 // Create product
 const createProduct = async (product) => {
-
     const {
         name,
         description,
@@ -16,7 +14,6 @@ const createProduct = async (product) => {
         status,
         featured
     } = product;
-
     const query = `
         INSERT INTO products
         (
@@ -35,7 +32,6 @@ const createProduct = async (product) => {
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
         RETURNING *;
     `;
-
     const values = [
         name,
         description,
@@ -49,29 +45,24 @@ const createProduct = async (product) => {
         status || "active",
         featured || false
     ];
-
     const result = await pool.query(query, values);
-
     return result.rows[0];
 };
 
 
 // Get all products
 const getProducts = async () => {
-
     const result = await pool.query(`
         SELECT *
         FROM products
         ORDER BY created_at DESC;
     `);
-
     return result.rows;
 };
 
 
 // Get single product
 const getProductById = async (id) => {
-
     const result = await pool.query(
         `
         SELECT *
@@ -80,14 +71,12 @@ const getProductById = async (id) => {
         `,
         [id]
     );
-
     return result.rows[0];
 };
 
 
 // Update product
 const updateProduct = async (id, product) => {
-
     const {
         name,
         description,
@@ -101,7 +90,6 @@ const updateProduct = async (id, product) => {
         status,
         featured
     } = product;
-
     const query = `
         UPDATE products
         SET
@@ -144,7 +132,6 @@ const updateProduct = async (id, product) => {
 
 // Delete product
 const deleteProduct = async (id) => {
-
     const result = await pool.query(
         `
         DELETE FROM products
@@ -153,7 +140,6 @@ const deleteProduct = async (id) => {
         `,
         [id]
     );
-
     return result.rows[0];
 };
 
