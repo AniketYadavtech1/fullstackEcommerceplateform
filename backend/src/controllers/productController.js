@@ -44,7 +44,7 @@ const getProducts = async (req, res) => {
 };
 
 
-// GET ONE
+// GET ONE two
 const getProduct = async (req, res) => {
 
     try {
