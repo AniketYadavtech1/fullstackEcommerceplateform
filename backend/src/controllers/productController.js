@@ -2,24 +2,30 @@ const productService = require("../services/productService");
 
 
 // CREATE
+// CREATE
 const createProduct = async (req, res) => {
     try {
+        console.log("Product request body:", req.body);
+
         const product = await productService.createProduct(req.body);
-        res.status(201).json({
+
+        return res.status(201).json({
             success: true,
             message: "Product created successfully",
             product
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
+        console.error("CREATE PRODUCT ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: "Failed to create product",
-            error: error.message
+            error: error?.message || String(error) || "Unknown error",
+            code: error?.code || null,
+            detail: error?.detail || null
         });
     }
 };
-
 
 // GET ALL
 const getProducts = async (req, res) => {
