@@ -12,6 +12,7 @@ if (!process.env.DATABASE_URL && !process.env.DB_HOST) {
 const poolConfig = process.env.DATABASE_URL
     ? {
           connectionString: process.env.DATABASE_URL,
+          // Supabase (cloud) always requires SSL
           ssl: { rejectUnauthorized: false }
       }
     : {
@@ -20,7 +21,9 @@ const poolConfig = process.env.DATABASE_URL
           user: process.env.DB_USER,
           password: process.env.DB_PASSWORD,
           database: process.env.DB_NAME,
-          ssl: { rejectUnauthorized: false }
+          // Local PostgreSQL typically does NOT use SSL – omit it
+          // If you *do* run PostgreSQL with SSL locally, set this to true
+          // ssl: { rejectUnauthorized: false }
       };
 
 const pool = new Pool(poolConfig);

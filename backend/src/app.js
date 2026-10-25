@@ -1,7 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 
+// Route handlers
 const productRoutes = require("./routes/productRoutes");
+const authRoutes = require("./routes/authRoutes");
+
+// Load DB (establishes connection & logs status)
 const pool = require("./config/database");
 
 const app = express();
@@ -42,4 +46,6 @@ app.get("/api/test-db", async (req, res) => {
 // Product API
 app.use("/api/products", productRoutes);
 
+// Auth API
+app.use("/api/auth", authRoutes);
 module.exports = app;
