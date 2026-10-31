@@ -2,14 +2,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 
-// Load JWT secret from env (fallback for local dev)
-const JWT_SECRET = process.env.JWT_SECRET || 'your_local_jwt_secret';
-const JWT_EXPIRES_IN = '7d'; // token validity
 
-/**
- * Register a new user.
- * Expected body: { email, password, name (optional) }
- */
+const JWT_SECRET = process.env.JWT_SECRET || 'your_local_jwt_secret';
+const JWT_EXPIRES_IN = '7d'; 
+
+
 async function signup(req, res) {
     const { email, password, name } = req.body;
     if (!email || !password) {

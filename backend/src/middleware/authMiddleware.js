@@ -1,4 +1,4 @@
-// backend/src/middleware/authMiddleware.js
+
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'your_local_jwt_secret';
 
