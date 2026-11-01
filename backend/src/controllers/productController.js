@@ -1,8 +1,7 @@
 const productService = require("../services/productService");
 
 
-// CREATE
-// CREATE
+
 const createProduct = async (req, res) => {
     try {
         console.log("Product request body:", req.body);
@@ -27,7 +26,7 @@ const createProduct = async (req, res) => {
     }
 };
 
-// GET ALL
+
 const getProducts = async (req, res) => {
 
     try {
@@ -50,7 +49,7 @@ const getProducts = async (req, res) => {
 };
 
 
-// GET ONE two
+
 const getProduct = async (req, res) => {
     try {
         const product = await productService.getProductById(
@@ -75,7 +74,7 @@ const getProduct = async (req, res) => {
 };
 
 
-// UPDATE
+
 const updateProduct = async (req, res) => {
 
     try {
@@ -111,7 +110,7 @@ const updateProduct = async (req, res) => {
 };
 
 
-// DELETE
+
 const deleteProduct = async (req, res) => {
 
     try {

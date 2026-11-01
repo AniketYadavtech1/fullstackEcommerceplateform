@@ -10,7 +10,7 @@ function verifyToken(req, res, next) {
   const token = authHeader.split(' ')[1];
   try {
     const payload = jwt.verify(token, JWT_SECRET);
-    req.user = payload;          // attach decoded payload to request
+    req.user = payload;         
     next();
   } catch (err) {
     return res.status(401).json({ success: false, message: 'Invalid token' });

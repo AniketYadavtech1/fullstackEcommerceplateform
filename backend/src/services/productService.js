@@ -49,7 +49,7 @@ const createProduct = async (product) => {
 };
 
 
-// Get all products
+
 const getProducts = async () => {
     const result = await pool.query(`
         SELECT *
@@ -60,7 +60,6 @@ const getProducts = async () => {
 };
 
 
-// Get single product
 const getProductById = async (id) => {
     const result = await pool.query(
         `
@@ -74,7 +73,6 @@ const getProductById = async (id) => {
 };
 
 
-// Update product
 const updateProduct = async (id, product) => {
     const {
         name,
@@ -129,7 +127,7 @@ const updateProduct = async (id, product) => {
 };
 
 
-// Delete product
+
 const deleteProduct = async (id) => {
     const result = await pool.query(
         `
