@@ -1,5 +1,4 @@
 const pool = require("../config/database");
-// Create product
 const createProduct = async (product) => {
     const {
         name,
