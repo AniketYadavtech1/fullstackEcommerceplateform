@@ -1,65 +1,285 @@
-// POST	http://localhost:5000/api/products/add-product	Create product
-// GET	http://localhost:5000/api/products/get-products	Get all products
-// GET	http://localhost:5000/api/products/get-product/1	Get product by ID
-// PUT	http://localhost:5000/api/products/update-product/1	Update product
-// DELETE	http://localhost:5000/api/products/delete-product/1	Delete product
+// Based on your actual Product Routes + Product Service + Product Controller + Auth Controller, below is your complete Postman API testing collection.
+
+// Your backend uses:
+// - Node.js + Express
+// - PostgreSQL
+// - JWT Authentication
+// - bcryptjs password hashing
+// I'll use localhost:5000 as your local base URL.
+// 1. Postman base URL
+// http://localhost:5000
+
+
+// First start your backend:
+// npm run start
+
+
+// Or:
+// node server.js
+
 
 // 2. Authentication APIs
-// Assuming you mount the auth router using:
-// app.use("/api/auth", authRoutes);
+// Your auth routes:
+// router.post('/signup', signup);
+// router.post('/login', login);
 
 
-// Method	API URL	Purpose
-// POST	http://localhost:5000/api/auth/signup	Register user
-// POST	http://localhost:5000/api/auth/login	Login user
-
-// 3. Complete server.js example
-// const express = require("express");
-// const cors = require("cors");
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-
-// // Routes
-// const productRoutes = require("./routes/productRoutes");
-// const authRoutes = require("./routes/authRoutes");
-
-// app.use("/api/products", productRoutes);
-// app.use("/api/auth", authRoutes);
-
-// // Home API
-// app.get("/", (req, res) => {
-//     res.send("E-commerce API is running");
-// });
-
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, "0.0.0.0", () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
-
-
-// Adjust the route filenames if yours are different.
-// 4. Test in Postman
-// Product API testing
-// GET
-// /api/products/get-products
-
-//  Copy product URL
-// Login API testing
+// API 1 — User Signup
 // POST
-// /api/auth/login
+//  http://localhost:5000/api/auth/signup
 
-//  Copy login URL
-// Note: For POST and PUT, select Body → raw → JSON in Postman and provide the request body expected by your controller.
-// 5. Local vs Railway URLs
-// Environment	Base URL
-// Local	http://localhost:5000
-// Android Emulator	http://10.0.2.2:5000
-// Railway Live	https://your-backend.up.railway.app
+// Postman settings:
+// - Method: POST
+// - Body → raw → JSON
+// - Header: Content-Type: application/json
+// Request body:
+// {
+//   "name": "Aniket Yadav",
+//   "email": "aniket@gmail.com",
+//   "password": "Aniket@123"
+// }
 
-// Your Railway API paths will remain exactly the same. Only the base URL changes.
 
-// Next step: Share your server.js and productController.js. I can verify all your actual endpoints, request bodies, and PostgreSQL integration before you deploy.
+// Expected response:
+// {
+//   "success": true,
+//   "token": "your_jwt_token",
+//   "user": {
+//     "id": 1,
+//     "email": "aniket@gmail.com",
+//     "name": "Aniket Yadav"
+//   }
+// }
+
+
+// API 2 — User Login
+// POST
+//  http://localhost:5000/api/auth/login
+
+// Request body:
+// {
+//   "email": "aniket@gmail.com",
+//   "password": "Aniket@123"
+// }
+
+
+// Expected response:
+// {
+//   "success": true,
+//   "token": "your_jwt_token",
+//   "user": {
+//     "id": 1,
+//     "email": "aniket@gmail.com",
+//     "name": "Aniket Yadav"
+//   }
+// }
+
+
+// Important: Copy the returned JWT token. Your current product routes do not require authentication middleware, so you do not need a token to test them.
+
+// 3. Product APIs
+// Your product route prefix is assumed to be /api/products.
+// API 3 — Add Product
+// POST
+// http://localhost:5000/api/products/add-product
+
+
+// Request body → raw → JSON:
+// {
+//   "name": "iPhone 17",
+//   "description": "Apple smartphone with 256GB storage",
+//   "category": "Smartphones",
+//   "brand": "Apple",
+//   "price": 79999,
+//   "discountPrice": 74999,
+//   "stock": 25,
+//   "sku": "IPH17-BLK-256",
+//   "imageUrl": "https://example.com/iphone17.jpg",
+//   "status": "active",
+//   "featured": true
+// }
+
+
+// Expected response:
+// {
+//   "success": true,
+//   "message": "Product created successfully",
+//   "product": {
+//     "id": 1,
+//     "name": "iPhone 17",
+//     "brand": "Apple",
+//     "price": "79999"
+//   }
+// }
+
+
+// The actual response includes the database-generated product fields.
+// API 4 — Get All Products
+// GET
+// http://localhost:5000/api/products/get-products
+
+
+// No request body required.
+
+// Expected response:
+// {
+//   "success": true,
+//   "count": 1,
+//   "products": [
+//     {
+//       "id": 1,
+//       "name": "iPhone 17",
+//       "category": "Smartphones",
+//       "brand": "Apple",
+//       "price": "79999"
+//     }
+//   ]
+// }
+
+
+// API 5 — Get Product By ID
+// GET
+// http://localhost:5000/api/products/get-product/1
+
+
+// Replace 1 with your actual product ID.
+
+// Expected response:
+// {
+//   "success": true,
+//   "product": {
+//     "id": 1,
+//     "name": "iPhone 17",
+//     "brand": "Apple"
+//   }
+// }
+
+
+// API 6 — Update Product
+// PUT
+// http://localhost:5000/api/products/update-product/1
+
+
+// Request body:
+// {
+//   "name": "iPhone 17 Pro",
+//   "description": "Updated Apple smartphone",
+//   "category": "Smartphones",
+//   "brand": "Apple",
+//   "price": 109999,
+//   "discountPrice": 99999,
+//   "stock": 40,
+//   "sku": "IPH17-PRO-256",
+//   "imageUrl": "https://example.com/iphone17pro.jpg",
+//   "status": "active",
+//   "featured": true
+// }
+
+
+// Expected response:
+// {
+//   "success": true,
+//   "message": "Product updated successfully",
+//   "product": {
+//     "id": 1,
+//     "name": "iPhone 17 Pro"
+//   }
+// }
+
+
+// Note: Your current update service updates every field, so send all product fields. It is not a partial PATCH operation.
+// API 7 — Delete Product
+// DELETE
+// http://localhost:5000/api/products/delete-product/1
+
+
+// Replace 1 with your actual product ID.
+
+// No request body required.
+
+// Expected response:
+// {
+//   "success": true,
+//   "message": "Product deleted successfully"
+// }
+
+
+
+// 4. Complete API endpoint summary
+// Here is your complete API list for Postman.
+// No.	Method	Endpoint
+// 1	POST	/api/auth/signup
+// 2	POST	/api/auth/login
+// 3	POST	/api/products/add-product
+// 4	GET	/api/products/get-products
+// 5	GET	/api/products/get-product/:id
+// 6	PUT	/api/products/update-product/:id
+// 7	DELETE	/api/products/delete-product/:id
+
+// All local API URLs
+// 1.
+// http://localhost:5000/api/auth/signup
+
+
+// 2.
+// http://localhost:5000/api/auth/login
+
+
+// 3.
+// http://localhost:5000/api/products/add-product
+
+
+// 4.
+// http://localhost:5000/api/products/get-products
+
+
+// 5.
+// http://localhost:5000/api/products/get-product/1
+
+
+// 6.
+// http://localhost:5000/api/products/update-product/1
+
+
+// 7.
+// http://localhost:5000/api/products/delete-product/1
+
+
+//  Copy all 7 API URLs
+// 5. Postman testing order
+// Test your APIs in this order:
+// 1. Start your Node.js server.
+// 2. Test Signup API and create a user.
+// 3. Test Login API and receive JWT token.
+// 4. Add a new product.
+// 5. Get all products and check the database records.
+// 6. Get one product using its ID.
+// 7. Update that product.
+// 8. Delete that product after testing.
+// 6. Important things to check in your code
+// Before deploying to Railway, I recommend these improvements:
+// 1. JWT_SECRET: Replace your fallback secret with a strong environment variable in production.
+// 2. Authentication: Your current product APIs are public. Add JWT middleware to protect add, update and delete operations.
+// 3. SKU: Your SKU should be unique. Avoid reusing an existing SKU.
+// 4. Update validation: Validate required fields before updating a product.
+// 5. Database: Ensure your PostgreSQL products and users tables match the fields used in your queries.
+// 7. Test your live API later
+// After Railway deployment, your endpoints will look like:
+// https://YOUR-PROJECT.up.railway.app/api/auth/signup
+
+// https://YOUR-PROJECT.up.railway.app/api/auth/login
+
+// https://YOUR-PROJECT.up.railway.app/api/products/add-product
+
+// https://YOUR-PROJECT.up.railway.app/api/products/get-products
+
+// https://YOUR-PROJECT.up.railway.app/api/products/get-product/1
+
+// https://YOUR-PROJECT.up.railway.app/api/products/update-product/1
+
+// https://YOUR-PROJECT.up.railway.app/api/products/delete-product/1
+
+
+// These URLs assume your server.js mounts the routers at /api/auth and /api/products.
+
+// One important question: Have you already tested all 7 APIs successfully in Postman, or are you getting any error?
