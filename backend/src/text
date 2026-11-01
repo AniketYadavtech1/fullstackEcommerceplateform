@@ -1,0 +1,65 @@
+// POST	http://localhost:5000/api/products/add-product	Create product
+// GET	http://localhost:5000/api/products/get-products	Get all products
+// GET	http://localhost:5000/api/products/get-product/1	Get product by ID
+// PUT	http://localhost:5000/api/products/update-product/1	Update product
+// DELETE	http://localhost:5000/api/products/delete-product/1	Delete product
+
+// 2. Authentication APIs
+// Assuming you mount the auth router using:
+// app.use("/api/auth", authRoutes);
+
+
+// Method	API URL	Purpose
+// POST	http://localhost:5000/api/auth/signup	Register user
+// POST	http://localhost:5000/api/auth/login	Login user
+
+// 3. Complete server.js example
+// const express = require("express");
+// const cors = require("cors");
+
+// const app = express();
+
+// app.use(cors());
+// app.use(express.json());
+
+// // Routes
+// const productRoutes = require("./routes/productRoutes");
+// const authRoutes = require("./routes/authRoutes");
+
+// app.use("/api/products", productRoutes);
+// app.use("/api/auth", authRoutes);
+
+// // Home API
+// app.get("/", (req, res) => {
+//     res.send("E-commerce API is running");
+// });
+
+// const PORT = process.env.PORT || 5000;
+
+// app.listen(PORT, "0.0.0.0", () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
+
+
+// Adjust the route filenames if yours are different.
+// 4. Test in Postman
+// Product API testing
+// GET
+// /api/products/get-products
+
+//  Copy product URL
+// Login API testing
+// POST
+// /api/auth/login
+
+//  Copy login URL
+// Note: For POST and PUT, select Body → raw → JSON in Postman and provide the request body expected by your controller.
+// 5. Local vs Railway URLs
+// Environment	Base URL
+// Local	http://localhost:5000
+// Android Emulator	http://10.0.2.2:5000
+// Railway Live	https://your-backend.up.railway.app
+
+// Your Railway API paths will remain exactly the same. Only the base URL changes.
+
+// Next step: Share your server.js and productController.js. I can verify all your actual endpoints, request bodies, and PostgreSQL integration before you deploy.

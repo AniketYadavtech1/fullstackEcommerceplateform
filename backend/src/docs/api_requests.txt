@@ -1,0 +1,117 @@
+# API Request Examples and Checks
+
+## 1. User Sign‑up
+**URL**: `POST http://localhost:5000/api/auth/signup`
+**Headers**:
+```
+Content-Type: application/json
+```
+**Request Body** (JSON):
+```json
+{
+  "email": "user@example.com",
+  "password": "StrongPass123!",
+  "name": "John Doe"   // optional
+}
+```
+**Expected Response** (`201`):
+```json
+{
+  "success": true,
+  "token": "<jwt-token>",
+  "user": {
+    "id": 1,
+    "email": "user@example.com",
+    "name": "John Doe"
+  }
+}
+```
+**API Check**:
+- Server must be running (`npm start`).
+- `email` and `password` are required; missing fields return `400`.
+- Duplicate email returns `409`.
+- Token is a JWT signed with the secret in `.env`.
+
+## 2. User Login
+**URL**: `POST http://localhost:5000/api/auth/login`
+**Headers**:
+```
+Content-Type: application/json
+```
+**Request Body** (JSON):
+```json
+{
+  "email": "user@example.com",
+  "password": "StrongPass123!"
+}
+```
+**Expected Response** (`200`):
+```json
+{
+  "success": true,
+  "token": "<jwt-token>",
+  "user": {
+    "id": 1,
+    "email": "user@example.com",
+    "name": "John Doe"
+  }
+}
+```
+**API Check**:
+- Wrong credentials → `401`.
+- Missing fields → `400`.
+- Returned token can be used for protected routes.
+
+## 3. Create Product (protected)
+**URL**: `POST http://localhost:5000/api/products`
+**Headers**:
+```
+Content-Type: application/json
+Authorization: Bearer <jwt-token>
+```
+**Request Body** (JSON):
+```json
+{
+  "name": "Sample Product",
+  "price": 99.99,
+  "description": "A great product",
+  "category": "Electronics"
+}
+```
+**Expected Response** (`201`):
+```json
+{
+  "success": true,
+  "product": {
+    "id": 10,
+    "name": "Sample Product",
+    "price": 99.99,
+    "description": "A great product",
+    "category": "Electronics",
+    "created_at": "2026-11-01T10:30:00.000Z"
+  }
+}
+```
+**API Check**:
+- Without `Authorization` header → `401`.
+- Invalid JSON → `400`.
+- All fields are required by the controller.
+
+## 4. Get All Products
+**URL**: `GET http://localhost:5000/api/products`
+**Headers**: none (public endpoint)
+**Expected Response** (`200`):
+```json
+{
+  "success": true,
+  "products": [/* product objects */]
+}
+```
+
+---
+**General Tips**
+- Use `curl` or a tool like Postman.
+- Verify status codes and response shapes.
+- For protected routes, paste the JWT from the login response into the `Authorization` header.
+- Check server console for any validation errors.
+
